@@ -10,6 +10,10 @@
 
 # Archives
 *.zip
+*.crx
+
+# Signing keys
+*.pem
 
 # Design source files
 *.psd
