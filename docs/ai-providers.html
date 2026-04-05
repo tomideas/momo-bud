@@ -77,20 +77,36 @@
   <li><strong>OpenClaw (Beta)</strong>：<code>ws://127.0.0.1:18789</code> — WebSocket 協定。</li>
 </ul>
 
+<h2>API 金鑰申請</h2>
+<p>雲端供應商需要 API 金鑰才能使用，以下是各供應商的申請連結：</p>
+<table>
+  <thead><tr><th>供應商</th><th>申請連結</th></tr></thead>
+  <tbody>
+    <tr><td>OpenAI</td><td><a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></td></tr>
+    <tr><td>Google AI</td><td><a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a></td></tr>
+    <tr><td>DeepSeek</td><td><a href="https://platform.deepseek.com/api_keys" target="_blank">platform.deepseek.com/api_keys</a></td></tr>
+    <tr><td>Qwen</td><td><a href="https://dashscope.console.aliyun.com/apiKey" target="_blank">dashscope.console.aliyun.com</a></td></tr>
+    <tr><td>OpenRouter</td><td><a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a></td></tr>
+    <tr><td>Moonshot</td><td><a href="https://platform.moonshot.cn/console/api-keys" target="_blank">platform.moonshot.cn</a></td></tr>
+    <tr><td>MiniMax</td><td><a href="https://platform.minimaxi.com/user-center/basic-information/interface-key" target="_blank">platform.minimaxi.com</a></td></tr>
+    <tr><td>NVIDIA</td><td><a href="https://build.nvidia.com/" target="_blank">build.nvidia.com</a></td></tr>
+  </tbody>
+</table>
+<p>本地供應商（Ollama、LM Studio、OpenClaw）不需要 API 金鑰。</p>
+
 <h2>設定供應商</h2>
 <ol>
   <li>開啟側邊欄，點擊右上角 <strong>設定</strong>（⚙️）。</li>
-  <li>在左側或分類中選擇 <strong>AI 模型</strong> 或對應供應商區塊。</li>
-  <li>選擇要使用的供應商，輸入 <strong>API 金鑰</strong>（雲端供應商通常需要；本地 Ollama / LM Studio 多數情況不需金鑰）。</li>
+  <li>在左側導覽列選擇 <strong>AI 模型</strong>。</li>
+  <li>選擇要使用的供應商，輸入 <strong>API 金鑰</strong>（雲端供應商需要；本地供應商不需要）。</li>
   <li>若需自訂網址，填寫 <strong>API 端點</strong>（見下方「自訂 API 端點」）。</li>
   <li>使用 <strong>測試連線</strong> 確認金鑰與網路可正常連線後再開始對話。</li>
 </ol>
 
 <h2>模型管理</h2>
-<p>在設定中可對模型進行完整管理：</p>
+<p>每個供應商預設提供 2 個主流模型（預設關閉），你可以完整管理：</p>
 <ul>
-  <li><strong>新增</strong> / <strong>刪除</strong> 模型項目</li>
-  <li><strong>重新命名</strong> 顯示名稱</li>
+  <li><strong>新增</strong> / <strong>刪除</strong> 模型項目（包括預設模型也可刪除或重新命名）</li>
   <li><strong>啟用</strong> / <strong>停用</strong> 個別模型</li>
   <li><strong>自訂 JSON</strong>：進階參數或請求覆寫</li>
   <li><strong>前綴提示</strong>：為該模型附加固定提示前綴</li>
@@ -99,6 +115,22 @@
 <div class="callout tip">
   <strong>💡 提示</strong>
   所有啟用的模型會合併為統一列表，在側邊欄輸入區的模型選擇器中切換使用。
+</div>
+
+<h2>OpenClaw 設定</h2>
+<p>OpenClaw 是 WebSocket 協定的本地 AI 閘道器，設定流程與其他供應商不同：</p>
+<ol>
+  <li>點擊 <strong>Connect</strong> 按鈕連線到 OpenClaw 閘道器。</li>
+  <li>連線成功後按鈕變為 <strong>Disconnect</strong>（hover 變紅），可隨時斷開。</li>
+  <li>連線後自動載入可用的 Session 列表。</li>
+  <li>選擇 Session 後，側邊欄會自動載入該 Session 的對話記錄。</li>
+  <li>模型開關會自動啟用，顯示為 <code>openclaw</code>。</li>
+</ol>
+<p>點擊 <strong>Setup Guide</strong> 可查看完整的伺服器架設與裝置認證教學。</p>
+
+<div class="callout tip">
+  <strong>💡 注意</strong>
+  OpenClaw 模式下，聯網搜尋與引用頁面按鈕會自動禁用（OpenClaw 有原生搜尋能力）。
 </div>
 
 <h2>自訂 API 端點</h2>
