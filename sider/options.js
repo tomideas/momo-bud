@@ -976,8 +976,11 @@ async function loadAll(){
       const originalCount = models.length;
       
       // Validate: 僅在「命中其它供應商的預設清單」或「provider 欄位不符」時才過濾；
+      // 本地 provider（ollama/lmstudio/無預設模型）允許任意模型名稱
       // 其它情況（包含未啟用與自訂名稱）一律保留
+      const isLocalProv = ['ollama','lmstudio','custom'].includes(id) || !(PROVIDER_DEFAULTS[id]?.models?.length);
       models = models.filter(m => {
+        if(isLocalProv) return true;
         const modelName = m.name || '';
         for(const otherId of Object.keys(PROVIDER_DEFAULTS)){
           if(otherId !== id && PROVIDER_DEFAULTS[otherId].models.includes(modelName)){
@@ -1695,13 +1698,17 @@ function getModelOwner(modelName){
 function sanitizeModels(models, currentProviderId){
   const seen=new Set();
   const out=[];
+  // 本地 / 自訂 provider 允許任意模型名稱（不做跨 provider 過濾）
+  const isLocalProvider = ['ollama','lmstudio','custom'].includes(currentProviderId) || !(PROVIDER_DEFAULTS[currentProviderId]?.models?.length);
   (Array.isArray(models)?models:[]).forEach(m=>{
     const name=(m?.name||'').trim(); if(!name) return;
-    const owner=getModelOwner(name);
-    // 若此名稱明確屬於其它 provider 的預設模型，則不保留
-    if(owner && owner!==currentProviderId) return;
-    // 若模型有 provider 欄位但與當前供應商不同，也不保留
-    if(m?.provider && m.provider!==currentProviderId) return;
+    if(!isLocalProvider){
+      const owner=getModelOwner(name);
+      // 若此名稱明確屬於其它 provider 的預設模型，則不保留
+      if(owner && owner!==currentProviderId) return;
+      // 若模型有 provider 欄位但與當前供應商不同，也不保留
+      if(m?.provider && m.provider!==currentProviderId) return;
+    }
     if(seen.has(name)) return; seen.add(name);
     out.push({ name, enabled: !!m.enabled, provider: currentProviderId, ...(m.thinkingParams ? { thinkingParams: m.thinkingParams } : {}), ...(m.prefixPrompt ? { prefixPrompt: m.prefixPrompt } : {}) });
   });

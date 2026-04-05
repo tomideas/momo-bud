@@ -2,9 +2,11 @@
 
 繁體中文 | [English](README.md)
 
-**友善的 AI 聊天側邊欄** — 在任何網頁中與多種 AI 模型即時對話的 Chrome 擴充功能。支援免費 API 供應商，無需綁定信用卡。
+🐹 **嘿，夥伴！來認識 Momo** — 你的瀏覽器裡，住著一隻溫暖的小夥伴。Momo AI Bud 是一款由設計師打造的 Chrome 側邊欄，相信 AI 工具不該只有功能，更該有溫度、有個性、有陪伴感 ✨。支援 11+ AI 模型對話 🤖、聯網搜尋 🔍、頁面擷取 📄、圖片理解 🖼️、深度思考 💡 — 一切都在一個小小的側邊欄裡，像跟朋友聊天一樣自然 💬
 
 ![Momo AI 截圖](docs/momo-preview.png)
+
+📖 **完整說明文件**：[designkidd.github.io](https://designkidd.github.io) — 安裝指南、功能介紹、供應商設定、更新日誌等。
 
 ## 功能
 
@@ -25,12 +27,12 @@
 
 無需信用卡，幾分鐘即可開始使用：
 
-| 供應商 | 免費模型 | 頻率限制 | 申請 API Key |
-|--------|---------|---------|-------------|
-| **Ollama Cloud** | minimax-m2.7、kimi-k2.5 等 | 單一並行任務，GPU 配額每 5 小時 / 7 天重置 | [ollama.com/settings/keys](https://ollama.com/settings/keys) |
-| **Google AI Studio** | gemini-3-flash-preview、gemini-3.1-flash-lite-preview | 每日 1,500 次 / 每分鐘 15 次，最高 100 萬 Token 上下文 | [aistudio.google.com/api-keys](https://aistudio.google.com/api-keys) |
-| **Groq** | Llama 3.3、DeepSeek-R1 | 每分鐘 ~30 次 / 每日 14,400 次，全球頂尖推理速度 | [console.groq.com/keys](https://console.groq.com/keys) |
-| **NVIDIA NIM** | 標註「Free Endpoint」的模型 | 每分鐘 ~40 次，無總量限制 | [build.nvidia.com/settings/api-keys](https://build.nvidia.com/settings/api-keys) |
+| 供應商 | 免費模型 | 頻率限制 | 申請 API Key | 模型列表 |
+|--------|---------|---------|-------------|---------|
+| **Ollama Cloud** | minimax-m2.7、kimi-k2.5 等 | 單一並行任務，GPU 配額每 5 小時 / 7 天重置 | [ollama.com/settings/keys](https://ollama.com/settings/keys) | [查看模型](https://ollama.com/v1/models) |
+| **Google AI Studio** | gemini-3-flash-preview、gemini-3.1-flash-lite-preview | 每日 1,500 次 / 每分鐘 15 次，最高 100 萬 Token 上下文 | [aistudio.google.com/api-keys](https://aistudio.google.com/api-keys) | [查看模型](https://ai.google.dev/gemini-api/docs/models) |
+| **Groq** | Llama 3.3、DeepSeek-R1 | 每分鐘 ~30 次 / 每日 14,400 次，全球頂尖推理速度 | [console.groq.com/keys](https://console.groq.com/keys) | [查看模型](https://console.groq.com/docs/rate-limits) |
+| **NVIDIA NIM** | 標註「Free Endpoint」的模型 | 每分鐘 ~40 次，無總量限制 | [build.nvidia.com/settings/api-keys](https://build.nvidia.com/settings/api-keys) | [查看模型](https://build.nvidia.com/models) |
 
 > **API 端點**：Ollama Cloud `https://ollama.com/v1` · Google AI `https://generativelanguage.googleapis.com/v1beta` · Groq `https://api.groq.com/openai/v1` · NVIDIA `https://integrate.api.nvidia.com/v1`
 

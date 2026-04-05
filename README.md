@@ -2,9 +2,11 @@
 
 [繁體中文](README.zh-TW.md) | English
 
-**Friendly AI Chat Sidebar** — A Chrome extension that lets you chat with multiple AI models on any webpage. Supports free API providers — no credit card required.
+🐹 **Hey bud! Meet Momo** — your friendly AI companion, right in your browser. Momo AI Bud is a Chrome sidebar crafted by a designer who believes AI tools should feel warm, personal, and delightful ✨ — not just functional. Chat with 11+ AI models 🤖, search the web 🔍, capture pages 📄, upload images 🖼️, and think deeper 💡 — all from a cozy little sidebar that feels like talking to a friend 💬
 
 ![Momo AI Screenshot](docs/momo-preview.png)
+
+📖 **Full documentation**: [designkidd.github.io](https://designkidd.github.io) — setup guides, feature walkthroughs, provider configs, and more.
 
 ## Features
 
@@ -25,12 +27,12 @@
 
 No credit card needed. Get started in minutes:
 
-| Provider | Free Models | Rate Limit | Get API Key |
-|----------|------------|------------|-------------|
-| **Ollama Cloud** | minimax-m2.7, kimi-k2.5 and more | 1 concurrent task, GPU quota resets every 5h / 7d | [ollama.com/settings/keys](https://ollama.com/settings/keys) |
-| **Google AI Studio** | gemini-3-flash-preview, gemini-3.1-flash-lite-preview | 1,500 RPD / 15 RPM, up to 1M token context | [aistudio.google.com/api-keys](https://aistudio.google.com/api-keys) |
-| **Groq** | Llama 3.3, DeepSeek-R1 | ~30 RPM / 14,400 RPD, blazing fast inference | [console.groq.com/keys](https://console.groq.com/keys) |
-| **NVIDIA NIM** | Models marked "Free Endpoint" | ~40 RPM, no total limit | [build.nvidia.com/settings/api-keys](https://build.nvidia.com/settings/api-keys) |
+| Provider | Free Models | Rate Limit | Get API Key | Models |
+|----------|------------|------------|-------------|--------|
+| **Ollama Cloud** | minimax-m2.7, kimi-k2.5 and more | 1 concurrent task, GPU quota resets every 5h / 7d | [ollama.com/settings/keys](https://ollama.com/settings/keys) | [View models](https://ollama.com/v1/models) |
+| **Google AI Studio** | gemini-3-flash-preview, gemini-3.1-flash-lite-preview | 1,500 RPD / 15 RPM, up to 1M token context | [aistudio.google.com/api-keys](https://aistudio.google.com/api-keys) | [View models](https://ai.google.dev/gemini-api/docs/models) |
+| **Groq** | Llama 3.3, DeepSeek-R1 | ~30 RPM / 14,400 RPD, blazing fast inference | [console.groq.com/keys](https://console.groq.com/keys) | [View models](https://console.groq.com/docs/rate-limits) |
+| **NVIDIA NIM** | Models marked "Free Endpoint" | ~40 RPM, no total limit | [build.nvidia.com/settings/api-keys](https://build.nvidia.com/settings/api-keys) | [View models](https://build.nvidia.com/models) |
 
 > **Base URLs**: Ollama Cloud `https://ollama.com/v1` · Google AI `https://generativelanguage.googleapis.com/v1beta` · Groq `https://api.groq.com/openai/v1` · NVIDIA `https://integrate.api.nvidia.com/v1`
 

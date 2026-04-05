@@ -1175,24 +1175,9 @@ function buildModelDropdown(enabledModels){
   // 選中的值 (uid)
   const currentVal = els.modelSelector.value;
 
-  // 偵測同名模型（不同 provider），需要加 provider 標籤
-  const nameCounts = {};
-  enabledModels.forEach(m => {
-    const n = m.name || m.id || m.model;
-    nameCounts[n] = (nameCounts[n] || 0) + 1;
-  });
-
+  // 偵測同名模型 — icon 已足夠區分，不加文字標籤
   function findByUid(uid){
     return enabledModels.find(x => modelUid(x) === uid);
-  }
-
-  function displayName(m){
-    const name = m.name || m.id || m.model;
-    if(nameCounts[name] > 1){
-      const pName = PROVIDER_DEFAULTS?.[m.provider]?.name || m.provider || '';
-      return name + ' (' + pName + ')';
-    }
-    return name;
   }
 
   function renderBtn(uid){

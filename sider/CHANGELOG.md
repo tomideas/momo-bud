@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.21.1] - 2026-04-06
+### Fixed — 本地 Provider 同名模型被誤刪
+- Ollama / LM Studio 等本地 Provider 手動新增的模型若與其他雲端 Provider 預設模型同名（如在 Ollama 加 `kimi-k2.5`），會被 `sanitizeModels` 和載入時的跨 provider 過濾邏輯誤刪
+- 修正：本地 Provider（ollama、lmstudio、無預設模型的 provider）跳過跨 provider 模型歸屬檢查，允許任意模型名稱
+
+---
+
 ## [2.21.0] - 2026-04-06
 ### Added — Groq Provider
 - 新增 Groq AI 供應商，預設模型 `openai/gpt-oss-120b` 和 `meta-llama/llama-4-scout-17b-16e-instruct`
