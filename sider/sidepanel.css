@@ -12,8 +12,8 @@
   /* Select width limits */
   --prompt-max:420px;
   --prompt-min:140px;
-  --model-max:calc(34px + 15ch);
-  --model-min:120px;
+  --model-max:160px;
+  --model-min:160px;
 
   /* User Bubble Compact */
   --user-bubble-padding-x:12px;
@@ -375,8 +375,9 @@ body { overflow:hidden; }
 .cm-dropdown {
   position:relative;
   display:inline-flex;
-  max-width:var(--model-max,220px);
-  min-width:var(--model-min,100px);
+  width:var(--model-max,160px);
+  min-width:var(--model-min,160px);
+  max-width:var(--model-max,160px);
 }
 .cm-dropdown-btn {
   display:inline-flex; align-items:center; gap:6px;

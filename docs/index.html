@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Momo AI — 友善的 AI 聊天側邊欄</title>
+  <title>介紹 — Momo AI Docs</title>
   <link rel="stylesheet" href="docs.css">
   <script src="docs.js"></script>
 </head>
@@ -12,7 +12,7 @@
 <header class="site-header">
   <a class="logo" href="index.html">🐹 Momo AI Docs</a>
   <nav>
-    <a href="introduction.html" class="hide-mobile">指南</a>
+    <a href="index.html" class="hide-mobile">指南</a>
     <a href="sidebar-chat.html" class="hide-mobile">功能</a>
     <a href="changelog.html" class="hide-mobile">更新日誌</a>
     <button class="menu-toggle" aria-label="選單">☰</button>
@@ -20,53 +20,102 @@
 </header>
 
 <div class="backdrop"></div>
+<div class="page-wrapper">
 
-<div style="margin-top:var(--header-h)">
-
-  <section class="hero">
-    <h1>🐹 Momo AI</h1>
-    <p class="tagline">友善的 AI 聊天側邊欄 — 在任何網頁中與多種 AI 模型即時對話，支援聯網搜尋、引用頁面、圖片上傳與思考模式。</p>
-    <div class="actions">
-      <a href="getting-started.html" class="primary">快速開始 →</a>
-      <a href="sidebar-chat.html" class="secondary">功能總覽</a>
-    </div>
-  </section>
-
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="icon">🤖</div>
-      <h3>多供應商支援</h3>
-      <p>支援 OpenAI、Google Gemini、DeepSeek、Qwen、Ollama、LM Studio、OpenRouter、NVIDIA 等 11 種 AI 供應商</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🔍</div>
-      <h3>聯網搜尋</h3>
-      <p>整合 Google、DuckDuckGo、Brave、Tavily、SearXNG 等搜尋引擎，讓 AI 獲取最新網路資訊</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">📄</div>
-      <h3>引用頁面內容</h3>
-      <p>一鍵擷取當前網頁內容作為 AI 對話上下文，支援全文、精讀模式與自訂 CSS 選擇器</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">💡</div>
-      <h3>思考模式</h3>
-      <p>啟用深度推理，支援各供應商的 Thinking / Reasoning 模式，展示 AI 的思考過程</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🖼️</div>
-      <h3>圖片理解</h3>
-      <p>上傳或貼上圖片，讓支援視覺的 AI 模型分析圖片內容</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🌐</div>
-      <h3>多語言介面</h3>
-      <p>完整支援繁體中文、簡體中文與英文介面</p>
-    </div>
+<aside class="sidebar">
+  <div class="sidebar-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="搜尋...">
   </div>
+  <div class="group-title">入門</div>
+  <a href="index.html">介紹</a>
+  <a href="installation.html">安裝</a>
+  <a href="getting-started.html">快速開始</a>
+  <div class="group-title">功能</div>
+  <a href="sidebar-chat.html">側邊欄聊天</a>
+  <a href="ai-providers.html">AI 模型供應商</a>
+  <a href="web-search.html">聯網搜尋</a>
+  <a href="page-capture.html">引用頁面內容</a>
+  <a href="image-upload.html">圖片上傳</a>
+  <a href="thinking-mode.html">思考模式</a>
+  <a href="tts.html">語音朗讀 (TTS)</a>
+  <a href="system-prompts.html">系統提示詞</a>
+  <a href="chat-history.html">聊天記錄</a>
+  <a href="float-ball.html">懸浮球</a>
+  <div class="group-title">設定</div>
+  <a href="settings.html">設定總覽</a>
+  <a href="shortcuts.html">快捷鍵</a>
+  <a href="i18n.html">多語言支援</a>
+  <div class="group-title">其他</div>
+  <a href="changelog.html">更新日誌</a>
+  <a href="privacy.html">隱私政策</a>
+</aside>
 
-  <footer class="site-footer">Momo AI — Friendly AI Chat Sidebar</footer>
+<main class="main-content">
+
+<h1>介紹</h1>
+
+<h2>什麼是 Momo AI？</h2>
+<p><strong>Momo AI</strong> 是一款 Chrome 瀏覽器擴充功能，提供優雅的 AI 聊天側邊欄體驗。你可以在瀏覽任何網頁時，隨時開啟側邊欄與 AI 對話，無需切換分頁或開啟其他應用程式。</p>
+<p>Momo AI 的核心理念是「<strong>友善且實用</strong>」——它不僅是一個聊天介面，更是一個整合了聯網搜尋、頁面擷取、圖片理解與深度推理的全方位 AI 助手。</p>
+
+<img src="momo-proview_v3.png" alt="Momo AI 側邊欄預覽" style="margin:16px 0 24px;box-shadow:0 4px 24px rgba(0,0,0,.18);max-width:100%;display:block">
+
+<h2>核心特色</h2>
+
+<h3>🤖 多 AI 供應商支援</h3>
+<p>支援 11 種 AI 供應商，涵蓋雲端與本地模型：</p>
+<table>
+  <thead><tr><th>供應商</th><th>類型</th><th>說明</th></tr></thead>
+  <tbody>
+    <tr><td>OpenAI</td><td>雲端</td><td>GPT-4o、o1、o3-mini 等</td></tr>
+    <tr><td>Google AI</td><td>雲端</td><td>Gemini 2.5 Flash / Pro</td></tr>
+    <tr><td>DeepSeek</td><td>雲端</td><td>DeepSeek Chat / Reasoner</td></tr>
+    <tr><td>Qwen（通義千問）</td><td>雲端</td><td>Qwen3 系列</td></tr>
+    <tr><td>OpenRouter</td><td>雲端</td><td>聚合平台，可存取多種模型</td></tr>
+    <tr><td>Moonshot (Kimi)</td><td>雲端</td><td>Moonshot / Kimi K2</td></tr>
+    <tr><td>MiniMax</td><td>雲端</td><td>MiniMax-Text-01 等</td></tr>
+    <tr><td>NVIDIA</td><td>雲端</td><td>NVIDIA NIM 模型</td></tr>
+    <tr><td>Ollama</td><td>本地</td><td>執行本地開源模型</td></tr>
+    <tr><td>LM Studio</td><td>本地</td><td>桌面 LLM 工具</td></tr>
+    <tr><td>OpenClaw</td><td>本地</td><td>WebSocket AI 閘道器（Beta）</td></tr>
+  </tbody>
+</table>
+
+<h3>🔍 聯網搜尋</h3>
+<p>內建多種搜尋引擎整合，AI 對話中可即時查詢網路最新資訊。</p>
+
+<h3>📄 引用頁面內容</h3>
+<p>一鍵將當前網頁內容作為對話脈絡，讓 AI 理解你正在閱讀的內容。</p>
+
+<h3>💡 思考模式</h3>
+<p>啟用深度推理，讓 AI 展示完整的思考過程，適合複雜問題求解。</p>
+
+<h3>🖼️ 圖片理解</h3>
+<p>上傳或貼上圖片，讓支援視覺功能的模型分析影像內容。</p>
+
+<h3>🔊 語音朗讀</h3>
+<p>AI 回覆支援 TTS 語音朗讀，可自訂語音、語速與音調。</p>
+
+<h3>📝 系統提示詞管理</h3>
+<p>內建多組實用提示詞（翻譯助手、寫作助手等），也可自訂。</p>
+
+<h3>🌐 多語言介面</h3>
+<p>完整支援繁體中文、簡體中文與英文。</p>
+
+<h2>隱私與安全</h2>
+<ul>
+  <li>所有設定資料透過 <code>chrome.storage.sync</code> 在 Google 帳號間同步</li>
+  <li>聊天記錄僅保存在本地（<code>chrome.storage.local</code>）</li>
+  <li>不收集任何個人資料，不會將你的對話傳送到第三方伺服器（除了你選擇的 AI 供應商）</li>
+</ul>
+
+<nav class="page-nav">
+  <span></span>
+  <a href="installation.html"><span class="label">下一頁</span><span class="title">安裝 →</span></a>
+</nav>
+
+</main>
 </div>
-
 </body>
 </html>

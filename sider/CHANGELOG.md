@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.16.5] - 2026-04-05
+### Fixed
+- **OpenClaw 回覆太慢導致「未回應」問題**：
+  - `chat.send` RPC 超時從 30 秒增加到 60 秒
+  - `chat.send` 超時時若事件流已有回應，不再直接結束，繼續等待回覆
+  - 新增輪詢穩定檢查：備用輪詢取得回覆後若 15 秒內無新內容變化，自動視為完成
+
+---
+
 ## [2.16.1] - 2026-04-05
 ### Fixed
 - **OpenClaw 模式禁用聯網搜尋與引用頁面按鈕**：選擇 OpenClaw 模型時，Web Search 和 Reference Page 按鈕現在會被灰掉並禁用（opacity 0.35、pointer-events none），避免使用者誤觸無效功能；切換回其他模型時自動恢復

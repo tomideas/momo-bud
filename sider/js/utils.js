@@ -101,17 +101,13 @@ const PROVIDER_DEFAULTS = {
     id: 'nvidia', name: 'NVIDIA',
     baseUrl: 'https://integrate.api.nvidia.com/v1',
     models: ['nvidia/nemotron-3-super-120b-a12b', 'moonshotai/kimi-k2.5'],
-    defaultApiKey: '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',
-    enabledModels: ['nvidia/nemotron-3-super-120b-a12b'],
-    enforceDefaultEnabled: true
+    enabledModels: []
   },
   ollama: {
     id: 'ollama', name: 'Ollama',
     baseUrl: 'https://ollama.com/v1',
     models: ['gpt-oss:120b', 'qwen3-vl:235b'],
-    defaultApiKey: '8f8b8885ce5d43898d38d87927dbda87.DYRCPfWOW0_4chfh0vY-Z9g7',
-    enabledModels: ['qwen3-vl:235b'],
-    enforceDefaultEnabled: true
+    enabledModels: []
   },
   openclaw: {
     id: 'openclaw', name: 'OpenClaw',
@@ -134,11 +130,9 @@ const PROVIDER_DEFAULTS = {
     id: 'qwen', name: 'Qwen',
     baseUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
     models: ['qwen3-max', 'qwen-flash'],
-    defaultApiKey: 'sk-49721f4b42b2429ca5b646d93876e55b',
-    enabledModels: ['qwen-flash'],
+    enabledModels: [],
     supportsThinking: true,
-    defaultEnableThinking: false,
-    enforceDefaultEnabled: true
+    defaultEnableThinking: false
   }
 };
 

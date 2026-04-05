@@ -1381,7 +1381,7 @@ async function loadOpenClawSessions(){
     select.innerHTML = '';
     const errOpt = document.createElement('option');
     errOpt.value = '';
-    errOpt.textContent = '載入失敗：' + e.message;
+    errOpt.textContent = t('loadFailed') + ': ' + e.message;
     select.appendChild(errOpt);
   }finally{
     clearTimeout(timer);

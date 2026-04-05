@@ -2,7 +2,7 @@
 {
   "name": "Momo:AI",
   "description": "Friendly AI Chat Sidebar",
-  "version": "2.16.2",
+  "version": "2.16.6",
   "manifest_version": 3,
   "icons": {
     "16": "icons/icon16.png",

@@ -209,20 +209,20 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === 'install') {
     const defaultQwenModels = [
       { name: 'qwen3-max', enabled: false, provider: 'qwen' },
-      { name: 'qwen-flash', enabled: true, provider: 'qwen' }
+      { name: 'qwen-flash', enabled: false, provider: 'qwen' }
     ];
     const qwenDef = PROVIDER_DEFAULTS.qwen;
     const defaultQwenProvider = {
-      apiKey: qwenDef.defaultApiKey || '',
+      apiKey: '',
       customBaseUrl: '',
       models: [
         { name: 'qwen3-max', enabled: false },
-        { name: 'qwen-flash', enabled: true }
+        { name: 'qwen-flash', enabled: false }
       ],
       enableThinking: qwenDef.defaultEnableThinking || false
     };
     const defaultQwenConfig = {
-      apiKey: qwenDef.defaultApiKey || '',
+      apiKey: '',
       baseUrl: qwenDef.baseUrl,
       enableThinking: qwenDef.defaultEnableThinking || false
     };

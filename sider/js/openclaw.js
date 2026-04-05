@@ -39,7 +39,7 @@ class OpenClawGateway {
       this._connectResolve = resolve;
       this._connectReject = reject;
       this._connectTimeout = setTimeout(() => {
-        reject(new Error('OpenClaw Gateway 連線逾時（15 秒）'));
+        reject(new Error('OpenClaw Gateway connection timeout (15s)'));
         this.stop();
       }, 15000);
       this._connect();
@@ -53,7 +53,7 @@ class OpenClawGateway {
     try {
       this.ws = new WebSocket(config.url);
     } catch (e) {
-      this._connectReject?.(new Error('無法建立 WebSocket：' + e.message));
+      this._connectReject?.(new Error('Failed to create WebSocket: ' + e.message));
       return;
     }
 
@@ -73,7 +73,7 @@ class OpenClawGateway {
       this._flushPending(new Error('gateway closed (' + evt.code + '): ' + reason));
       if (this._connectReject && !this.hello) {
         clearTimeout(this._connectTimeout);
-        this._connectReject(new Error('連線關閉: ' + (reason || evt.code)));
+        this._connectReject(new Error('Connection closed: ' + (reason || evt.code)));
         this._connectReject = null;
       }
     });
@@ -133,7 +133,7 @@ class OpenClawGateway {
     } catch (e) {
       console.error('[OpenClaw] connect 失敗:', e.message);
       clearTimeout(this._connectTimeout);
-      this._connectReject?.(new Error('連線被拒絕：' + e.message));
+      this._connectReject?.(new Error('Connection rejected: ' + e.message));
       this._connectReject = null;
       this.ws?.close(4008, 'connect failed');
     }
@@ -186,7 +186,7 @@ class OpenClawGateway {
     const p = new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         this.pending.delete(id);
-        reject(new Error(method + ' 逾時 (' + (timeoutMs / 1000) + 's)'));
+        reject(new Error(method + ' timeout (' + (timeoutMs / 1000) + 's)'));
       }, timeoutMs);
       this.pending.set(id, { resolve, reject, timeoutId });
     });

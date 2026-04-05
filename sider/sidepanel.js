@@ -75,12 +75,12 @@ async function streamOpenClawChat(assistantTs){
     modelProvider = md?.provider;
   }
   const cfg = providerConfigs?.[modelProvider];
-  if(!cfg?.isOpenClaw) throw new Error('非 OpenClaw 供應商');
+  if(!cfg?.isOpenClaw) throw new Error('Not an OpenClaw provider');
 
   const wsUrl = cfg.baseUrl;
   const token = cfg.apiKey || '';
 
-  if(!wsUrl) throw new Error('請先在設定頁面填入 OpenClaw Gateway 的 WebSocket URL');
+  if(!wsUrl) throw new Error(sp_t('openclawMissingUrl'));
 
   const lang = await awaitGetZhVariant();
 
@@ -93,7 +93,7 @@ async function streamOpenClawChat(assistantTs){
     await openclawGateway.ensureConnected({ url: wsUrl, token });
     updateThinkingStatus(assistantTs, '');
   }catch(e){
-    throw new Error('連線 OpenClaw Gateway 失敗：' + e.message);
+    throw new Error(sp_t('openclawConnectFailed') + ': ' + e.message);
   }
 
   // sessionKey 優先順序（與 Copilot Eg() 一致）：
@@ -113,7 +113,7 @@ async function streamOpenClawChat(assistantTs){
 
   // 取得最新的使用者訊息
   const session = getCurrentSession();
-  if(!session) throw new Error('無當前對話');
+  if(!session) throw new Error('No active session');
   const userMessages = session.messages.filter(m => m.role === 'user');
   const lastUserMsg = userMessages[userMessages.length - 1];
 
@@ -259,11 +259,11 @@ async function streamOpenClawChat(assistantTs){
         return;
       }
       if(payload.state === 'aborted'){
-        finish(chatStream || '（已中止）');
+        finish(chatStream || sp_t('openclawAborted'));
         return;
       }
       if(payload.state === 'error'){
-        finish('（OpenClaw 錯誤：' + (payload.errorMessage || 'unknown') + '）');
+        finish(sp_t('openclawError').replace('{{msg}}', payload.errorMessage || 'unknown'));
         return;
       }
     }
@@ -272,12 +272,19 @@ async function streamOpenClawChat(assistantTs){
   // ── 2) 發送 chat.send ──
   updateThinkingStatus(assistantTs, '');
   try{
-    await openclawGateway.request('chat.send', sendParams, { timeoutMs: 30000 });
+    await openclawGateway.request('chat.send', sendParams, { timeoutMs: 60000 });
     console.log('[OpenClaw] chat.send 已確認');
     updateThinkingStatus(assistantTs, '');
   }catch(e){
-    finish(null);
-    throw new Error('發送訊息失敗：' + e.message);
+    // chat.send RPC 超時不代表訊息沒送出，Gateway 可能正在處理（web search 等）
+    // 如果已經收到事件流回應，繼續等待；否則才報錯
+    if(eventCount > 0 || chatEventCount > 0){
+      console.warn('[OpenClaw] chat.send RPC 超時但事件流有回應，繼續等待:', e.message);
+    } else {
+      console.error('[OpenClaw] chat.send 失敗且無事件流:', e.message);
+      finish(null);
+      throw new Error(sp_t('openclawSendFailed') + ': ' + e.message);
+    }
   }
 
   // ── 3) chat.history 輪詢（僅在事件流完全失效時啟動的後備方案） ──
@@ -328,10 +335,11 @@ async function streamOpenClawChat(assistantTs){
       console.warn('[OpenClaw] 備用輪詢 #'+pollCount+' 失敗:', e.message);
     }
   }
-  // 12 秒後才啟動輪詢，且僅在事件流無回應時
+  // 12 秒後才啟動輪詢，且僅在事件流無 chat 回應時
+  // 有 agent 事件但無 chat 事件 = OpenClaw 在工作但事件流可能漏掉 chat，需要輪詢補救
   pollDelayTimer = setTimeout(()=>{
     if(done || chatEventCount > 0) return;
-    console.log('[OpenClaw] 12 秒無 chat 事件，啟動備用輪詢');
+    console.log('[OpenClaw] 12 秒無 chat 事件（agent 事件:', eventCount, '），啟動備用輪詢');
     pollHistory();
     pollTimer = setInterval(pollHistory, 3000);
   }, 12000);
@@ -356,11 +364,31 @@ async function streamOpenClawChat(assistantTs){
     finish(null);
   }, 180000);
 
+  // ── 5) 輪詢穩定檢查：如果備用輪詢已取得回覆且 15 秒內無新內容變化，視為完成 ──
+  let lastPollText = '';
+  let pollStableCount = 0;
+  const pollStableCheck = setInterval(()=>{
+    if(done){ clearInterval(pollStableCheck); return; }
+    if(!chatStream || chatEventCount > 0){ pollStableCount = 0; lastPollText = ''; return; }
+    // 只在備用輪詢模式下（無 chat 事件）檢查穩定性
+    if(chatStream === lastPollText){
+      pollStableCount++;
+      if(pollStableCount >= 3){
+        console.log('[OpenClaw] 備用輪詢回覆已穩定 15 秒，視為完成');
+        clearInterval(pollStableCheck);
+        finish(chatStream);
+      }
+    } else {
+      lastPollText = chatStream;
+      pollStableCount = 0;
+    }
+  }, 5000);
+
   // 等待完成
   const result = await finishPromise;
 
   if(!result){
-    replaceMessageContent(assistantTs, '（OpenClaw 未回應，請檢查 Gateway 連線和 Agent 設定）', false);
+    replaceMessageContent(assistantTs, sp_t('openclawNoResponse'), false);
     return;
   }
   finalizeStreamingMessage(assistantTs);
@@ -594,7 +622,7 @@ function setButtonTooltip(btn, text){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  try { init(); } catch(e){ showFatal('init() 例外', e); }
+  try { init(); } catch(e){ showFatal('init() error', e); }
 });
 
 /* ================= Toast Helper ================= */
@@ -768,7 +796,7 @@ function cacheDom(){
 function assertDom(){
   const required=['promptSelector','modelSelector','sendButton','messageInput','chatMessages'];
   const miss=required.filter(k=>!els[k]);
-  if(miss.length){ showFatal('缺少必要 DOM: '+miss.join(', ')); return false; }
+  if(miss.length){ showFatal('Missing DOM: '+miss.join(', ')); return false; }
   return true;
 }
 
@@ -1001,11 +1029,11 @@ async function loadPrompts(){
       promptList=migrated.prompts;
       selectedId=migrated.selected || DEFAULT_PROMPT_ID;
       
-      // 清理名稱中的"預設"標籤（從舊數據中移除）
+      // 清理名稱中的"預設"/"Default" 標籤（從舊數據中移除）
       let needsCleanup=false;
       promptList.forEach(p=>{
-        if(p.name && p.name.endsWith('預設')){
-          p.name=p.name.replace(/預設$/, '').trim();
+        if(p.name && (p.name.endsWith('預設') || p.name.endsWith('Default'))){
+          p.name=p.name.replace(/預設$|Default$/, '').trim();
           needsCleanup=true;
         }
       });
@@ -1036,7 +1064,7 @@ async function loadPrompts(){
       sel.value=effective;
       console.log('[SP] loadPrompts - Selected prompt:', effective);
     }
-  }catch(e){ showFatal('讀取提示詞失敗', e); }
+  }catch(e){ showFatal('Failed to load prompts', e); }
 }
 function getSelectedPromptObj(){ return prompts.find(p=>p.id===els.promptSelector.value); }
 
@@ -1301,7 +1329,7 @@ async function loadAndShowOpenClawHistory(){
 
   const wsUrl = (cfg.baseUrl || '').replace(/\/+$/,'');
   const token = cfg.apiKey || '';
-  if(!wsUrl){ showToast('Gateway URL 未設定'); return; }
+  if(!wsUrl){ showToast(sp_t('gatewayUrlNotSet')); return; }
 
   try{
     // Reuse existing connection or create new one
@@ -1367,7 +1395,7 @@ async function loadAndShowOpenClawHistory(){
   }catch(e){
     if(isStale()) return; // 已切換模型，靜默丟棄
     console.error('[OpenClaw History]', e);
-    showToast('載入失敗：' + e.message);
+    showToast(sp_t('loadFailed') + ': ' + e.message);
   }
 }
 
@@ -1786,7 +1814,7 @@ function getPageTitle(url){
     const urlObj = new URL(url);
     return urlObj.hostname;
   }catch{
-    return '舊頁面';
+    return sp_t('oldPage');
   }
 }
 
@@ -1844,7 +1872,7 @@ function flagPageContextError(message){
   const btn=els.pageContextButton;
   if(!btn) return;
   btn.classList.add('error');
-  const tipMessage = message === '此頁面無法讀取'
+  const tipMessage = message === 'PAGE_UNREADABLE'
     ? sp_t('cannotRead')
     : sp_tpl('referencePage_error',{msg:message});
   const tip=tipMessage;
@@ -1876,7 +1904,7 @@ function setupPermissionWatchers(){
       storeGlobalPermissionFlag(false);
       if(chatWithPageEnabled){
         applyChatWithPageEnabled(false);
-        flagPageContextError('權限已取消');
+        flagPageContextError(sp_t('permissionCancelled'));
       }
       setPageContextBusy(false);
     }
@@ -1914,7 +1942,7 @@ function updatePageContextPreview(){
   if(els.pageContentTitle){
     if(pageContextMessages.length === 1){
       const msg = pageContextMessages[0];
-      const displayTitle = msg.pageTitle || '未命名頁面';
+      const displayTitle = msg.pageTitle || sp_t('untitledPage');
       els.pageContentTitle.textContent = displayTitle.length > 50 
         ? displayTitle.substring(0, 50) + '...' 
         : displayTitle;
@@ -1927,7 +1955,7 @@ function updatePageContextPreview(){
   if(els.pageContentMeta){
     if(pageContextMessages.length === 1){
       const msg = pageContextMessages[0];
-      const domain = msg.pageUrl ? new URL(msg.pageUrl).hostname : '未知來源';
+      const domain = msg.pageUrl ? new URL(msg.pageUrl).hostname : sp_t('unknownSource');
       const lengthText = `${(totalLength / 1000).toFixed(1)}k 字符`;
       els.pageContentMeta.textContent = `${domain} • ${lengthText}`;
     } else {
@@ -1952,7 +1980,7 @@ function showPageContentPreview(title, url, contentLength, fullContent = ''){
   currentPageContent = fullContent;
   
   // 設置標題（最多顯示 50 字符）
-  const displayTitle = title || '未命名頁面';
+  const displayTitle = title || sp_t('untitledPage');
   if(els.pageContentTitle){
     els.pageContentTitle.textContent = displayTitle.length > 50 
       ? displayTitle.substring(0, 50) + '...' 
@@ -1961,7 +1989,7 @@ function showPageContentPreview(title, url, contentLength, fullContent = ''){
   
   // 設置元數據（URL + 內容長度）
   if(els.pageContentMeta){
-    const domain = url ? new URL(url).hostname : '未知來源';
+    const domain = url ? new URL(url).hostname : sp_t('unknownSource');
     const lengthText = contentLength ? `${(contentLength / 1000).toFixed(1)}k 字符` : '';
     els.pageContentMeta.textContent = `${domain} • ${lengthText}`;
   }
@@ -2021,9 +2049,9 @@ function togglePageContentExpanded(){
         const card = document.createElement('div');
         card.className = 'page-card';
         
-        const domain = msg.pageUrl ? new URL(msg.pageUrl).hostname : '未知來源';
+        const domain = msg.pageUrl ? new URL(msg.pageUrl).hostname : sp_t('unknownSource');
         const lengthText = msg.content ? `${(msg.content.length / 1000).toFixed(1)}k 字符` : '0k';
-        const title = msg.pageTitle || '未命名頁面';
+        const title = msg.pageTitle || sp_t('untitledPage');
         
         card.innerHTML = `<div class="page-card-header"><div class="page-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></div><div class="page-card-info"><div class="page-card-title">${escapeHtml(title.length > 40 ? title.substring(0, 40) + '...' : title)}</div><div class="page-card-meta">${escapeHtml(domain)} • ${lengthText}</div></div><button class="page-card-remove" data-ts="${msg.ts}" title="移除此頁面">✕</button></div>`;
         
@@ -2176,13 +2204,13 @@ async function handlePageContextToggle(){
     // 檢查權限
     const globalGranted=await ensureGlobalPagePermission({ requestIfNeeded:true });
     if(!globalGranted){
-      flagPageContextError('需要授權所有網站');
+      flagPageContextError(sp_t('needAllSitesPermission'));
       return;
     }
     
     const tab=await getActiveTab();
     if(!tab?.id) throw new Error('找不到目前分頁');
-    if(!isSupportedPageUrl(tab.url)) throw new Error('此頁面無法讀取'); // sentinel — do not translate, matched in flagPageContextError
+    if(!isSupportedPageUrl(tab.url)) throw new Error('PAGE_UNREADABLE'); // sentinel — matched in flagPageContextError
     
     // 更新按鈕狀態：顯示正在捕獲
     if(btn){
@@ -4809,7 +4837,7 @@ function showPageContextModal(msgOrMsgs){
   // 合併所有頁面內容，添加清晰的頁面標識
   const allContent = messages.map((m, index) => {
     const pageNum = numberToEnglish(index + 1);
-    const title = m.pageTitle || '未命名頁面';
+    const title = m.pageTitle || sp_t('untitledPage');
     const url = m.pageUrl || '';
     const domain = url ? new URL(url).hostname : '';
     const length = (m.content || '').length;
