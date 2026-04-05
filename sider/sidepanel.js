@@ -1228,7 +1228,7 @@ function buildModelDropdown(enabledModels){
       }
       const span = document.createElement('span');
       span.className = 'cm-item-label';
-      span.textContent = displayName(m);
+      span.textContent = name;
       item.appendChild(span);
 
       if(uid === els.modelSelector.value){

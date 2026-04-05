@@ -54,7 +54,7 @@ No credit card needed. Get started in minutes:
 
 ## 📖 Documentation
 
-👉 [designkidd.github.io](https://designkidd.github.io)
+👉 [tomideas.github.io](https://tomideas.github.io)
 
 ## 🗂️ Project Structure
 

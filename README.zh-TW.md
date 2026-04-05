@@ -54,7 +54,7 @@
 
 ## 📖 說明文件
 
-👉 [designkidd.github.io](https://designkidd.github.io)
+👉 [tomideas.github.io](https://tomideas.github.io)
 
 ## 🗂️ 專案結構
 

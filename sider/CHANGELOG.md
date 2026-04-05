@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.21.2] - 2026-04-06
+### Changed
+- 同名模型下拉選單不再加 Provider 文字標籤（如 `(Ollama)`），僅靠 Provider icon 區分
+
+---
+
 ## [2.21.1] - 2026-04-06
 ### Fixed — 本地 Provider 同名模型被誤刪
 - Ollama / LM Studio 等本地 Provider 手動新增的模型若與其他雲端 Provider 預設模型同名（如在 Ollama 加 `kimi-k2.5`），會被 `sanitizeModels` 和載入時的跨 provider 過濾邏輯誤刪
