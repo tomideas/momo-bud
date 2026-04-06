@@ -59,6 +59,12 @@
 <h2>v2.21.0 (2026-04-06)</h2>
 <p>Added <strong>Groq</strong> AI provider; default models <code>openai/gpt-oss-120b</code> and <code>meta-llama/llama-4-scout-17b-16e-instruct</code>; API keys at <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a>; settings page shows free-tier notes; <code>host_permissions</code> includes <code>api.groq.com</code>.</p>
 
+<h2>v2.20.1 (2026-04-06)</h2>
+<p>Google AI default models updated to <code>gemini-3.1-flash-lite-preview</code> and <code>gemini-3-flash-preview</code>.</p>
+
+<h2>v2.20.0 (2026-04-06)</h2>
+<p>Fixed duplicate model names across providers: model identity now uses a <code>provider::name</code> uid; same display name on different providers can both be enabled; the dropdown adds a provider name suffix for duplicates; legacy selections migrate to the new uid format.</p>
+
 <h2>v2.19.5 (2026-04-06)</h2>
 <p>Fix test connection permission popup: added all built-in AI provider API domains (DeepSeek, Google AI, MiniMax, Moonshot, NVIDIA, OpenRouter, Qwen) to <code>host_permissions</code>, so clicking Start Test no longer triggers Chrome's permission request dialog.</p>
 

@@ -59,6 +59,12 @@
 <h2>v2.21.0（2026-04-06）</h2>
 <p>新增 <strong>Groq</strong> AI 供應商；預設模型 <code>openai/gpt-oss-120b</code>、<code>meta-llama/llama-4-scout-17b-16e-instruct</code>；API Key 於 <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a> 申請；設定頁顯示免費方案說明；<code>host_permissions</code> 加入 <code>api.groq.com</code>。</p>
 
+<h2>v2.20.1（2026-04-06）</h2>
+<p>Google AI 預設模型更新為 <code>gemini-3.1-flash-lite-preview</code> 與 <code>gemini-3-flash-preview</code>。</p>
+
+<h2>v2.20.0（2026-04-06）</h2>
+<p>修正同名模型跨 Provider 共存：模型唯一識別改用 <code>provider::name</code> 組合 uid；不同 Provider 下的同名模型可同時啟用並出現在下拉選單；同名模型在下拉選單中自動加上 Provider 名稱標籤；舊格式的模型選擇會自動遷移為新 uid。</p>
+
 <h2>v2.19.5（2026-04-06）</h2>
 <p>測試連線不再彈出權限請求：將所有內建 AI Provider 的 API 域名加入 <code>host_permissions</code>，Start Test 不再觸發 Chrome 權限彈窗；自訂 URL 或 localhost 仍透過 <code>optional_host_permissions</code> 動態請求。</p>
 
