@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.21.3] - 2026-04-06
+### Changed
+- README / README.zh-TW：開頭賣點與功能列表對齊（含 Groq、OpenClaw、系統 TTS、字體大小／字粗、多語言、浮球等）；移除已不主打之「深度思考／think deeper」描述
+
+---
+
 ## [2.21.2] - 2026-04-06
 ### Changed
 - 同名模型下拉選單不再加 Provider 文字標籤（如 `(Ollama)`），僅靠 Provider icon 區分

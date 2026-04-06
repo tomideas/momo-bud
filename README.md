@@ -2,7 +2,7 @@
 
 [繁體中文](README.zh-TW.md) | English
 
-🐹 **Hey bud! Meet Momo** — your friendly AI companion, right in your browser. Momo AI Bud is a Chrome sidebar crafted by a designer who believes AI tools should feel warm, personal, and delightful ✨ — not just functional. Chat with 11+ AI models 🤖, search the web 🔍, capture pages 📄, upload images 🖼️, and think deeper 💡 — all from a cozy little sidebar that feels like talking to a friend 💬
+🐹 **Hey bud! Meet Momo** — your friendly AI companion, right in your browser. Momo AI Bud is a Chrome sidebar crafted by a designer who believes AI tools should feel warm, personal, and delightful ✨ — not just functional. Pick from **11+ AI providers** 🤖 (including Groq, OpenClaw Beta, and more), **search the web** 🔍, **capture pages** 📄, **upload images** 🖼️, **hear replies with system TTS** 🔊, and **tune font size & weight for comfortable reading** 👁️ — with **Traditional Chinese / Simplified Chinese / English** UI 🌐, a **float ball** for quick access 🎈, **custom prompts**, **chat history**, and **shortcuts** — all from a cozy little sidebar that feels like talking to a friend 💬
 
 ![Momo AI Screenshot](docs/momo-preview.png)
 
